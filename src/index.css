@@ -1,0 +1,88 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+.app {
+    display: flex;
+}
+
+/* nav */
+
+nav {
+    height: 100vh;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+nav .logo-container,
+nav .controls-container {
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* nav .logo-container img {
+    width: 50px;
+} */
+
+/* dashboard */
+
+.dashboard {
+    padding: 30px;
+    width: 100%;
+}
+
+.dashboard .ticket-container {
+    height: 80vh;
+    overflow: scroll;
+}
+
+/* Ticket Card */
+
+.ticket-card {
+    display: flex;
+    width: 100%;
+}
+
+.ticket-card #link {
+    display: flex;
+    width: 100%;
+}
+
+.ticket-card #link > * {
+    background-color: rgb(221, 221, 221);
+    margin: 2px;
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.ticket-card .ticket-color {
+    width: 15px !important;
+    padding: 10px !important;
+    margin: 2px;
+}
+
+.ticket-card .avatar-container {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.ticket-card .img-container {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.ticket-card .img-container img {
+    width: 100%;
+}
