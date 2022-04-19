@@ -195,15 +195,14 @@ nav .controls-container .icon {
     margin: 20px 0 20px 0;
 }
 
-.ticket form .img-preview {
-    height: auto;
-    width: auto;
-    margin: 30px;
-    border-radius: 400px;
+.ticket .img-preview {
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
     overflow: hidden;
-
 }
 
-.ticket form .img-preview img {
+.ticket .img-preview img {
     width: 100%;
 }
