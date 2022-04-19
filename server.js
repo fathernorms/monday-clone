@@ -1,17 +1,17 @@
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 const axios = require("axios");
 
 const app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, "./build")));
 app.use(express.json());
 
-const url =
-    "https://1d7d352b-f3f9-4a4f-9998-555f76b6705d-asia-south1.apps.astra.datastax.com/api/rest/v2/namespaces/tickets/collections/tasks";
-const token =
-    "AstraCS:cokTSMeLXEtDTPPTSZsqRPDZ:fd546aece9f75be806128b90ab4a75f0a0e9286fe416085f90270441a7435676";
+const url = process.env.URL;
+const token = process.env.ASTRA_TOKEN;
 
 app.get("/tickets", async (req, res) => {
     const options = {
