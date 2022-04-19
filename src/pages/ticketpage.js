@@ -4,6 +4,7 @@ import axios from "axios";
 import CategoriesContext from "../context";
 
 const TicketPage = ({ editMode }) => {
+    const apiURL = "https://norms-monday-clone.herokuapp.com/tickets";
     const [formData, setFormData] = useState({
         status: "Not started",
         progress: 0,
@@ -18,12 +19,9 @@ const TicketPage = ({ editMode }) => {
         e.preventDefault();
 
         if (editMode) {
-            const response = await axios.put(
-                `http://localhost:8000/tickets/${id}`,
-                {
-                    data: formData,
-                }
-            );
+            const response = await axios.put(`${apiURL}/${id}`, {
+                data: formData,
+            });
             const success = response.status === 200;
             if (success) {
                 navigate("/");
@@ -31,7 +29,7 @@ const TicketPage = ({ editMode }) => {
         }
 
         if (!editMode) {
-            const response = await axios.post("http://localhost:8000/tickets", {
+            const response = await axios.post(apiURL, {
                 formData,
             });
             const success = response.status === 200;
@@ -42,7 +40,7 @@ const TicketPage = ({ editMode }) => {
     };
 
     const fetchData = async () => {
-        const response = await axios.get(`http://localhost:8000/tickets/${id}`);
+        const response = await axios.get(`${apiURL}/${id}`);
         setFormData(response.data.data);
     };
 

@@ -50,6 +50,10 @@ const Dashboard = () => {
     return (
         <div className="dashboard">
             <h1>My Projects</h1>
+            <p>
+                TODO: Add User authentication, Develop and use own NodeJS REST
+                API for database
+            </p>
             <div className="ticket-container">
                 {tickets &&
                     uniqueCategories?.map((uniqueCategory, categoryIndex) => (
