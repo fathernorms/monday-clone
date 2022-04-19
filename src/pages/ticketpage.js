@@ -1,16 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import CategoriesContext from "../context";
 
-const TicketPage = () => {
+const TicketPage = ({ editMode }) => {
     const [formData, setFormData] = useState({
-        status: "not started",
+        status: "Not started",
         progress: 0,
         timestamp: new Date().toISOString,
     });
-    const editMode = false;
+    const { categories, setCategories } = useContext(CategoriesContext);
 
-    const handleSubmit = () => {
-        console.log("submitted");
+    const navigate = useNavigate();
+    let { id } = useParams();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (editMode) {
+            const response = await axios.put(
+                `http://localhost:8000/tickets/${id}`,
+                {
+                    data: formData,
+                }
+            );
+            const success = response.status === 200;
+            if (success) {
+                navigate("/");
+            }
+        }
+
+        if (!editMode) {
+            const response = await axios.post("http://localhost:8000/tickets", {
+                formData,
+            });
+            const success = response.status === 200;
+            if (success) {
+                navigate("/");
+            }
+        }
     };
+
+    const fetchData = async () => {
+        const response = await axios.get(`http://localhost:8000/tickets/${id}`);
+        setFormData(response.data.data);
+    };
+
+    useEffect(() => {
+        if (editMode) {
+            fetchData();
+        }
+    }, []);
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -21,8 +61,6 @@ const TicketPage = () => {
             [name]: value,
         }));
     };
-
-    const categories = ["test 1", "test 2"];
 
     console.log(formData);
 
@@ -71,7 +109,6 @@ const TicketPage = () => {
                             name="category"
                             type="text"
                             onChange={handleChange}
-                            required={true}
                             value={formData.category}
                         />
 
@@ -84,7 +121,7 @@ const TicketPage = () => {
                                 type="radio"
                                 onChange={handleChange}
                                 value={1}
-                                checked={formData.priority === 1}
+                                checked={formData.priority == 1}
                             />
                             <label htmlFor="priority-2">2</label>
                             <input
@@ -93,7 +130,7 @@ const TicketPage = () => {
                                 type="radio"
                                 onChange={handleChange}
                                 value={2}
-                                checked={formData.priority === 2}
+                                checked={formData.priority == 2}
                             />
                             <label htmlFor="priority-3">3</label>
                             <input
@@ -102,7 +139,7 @@ const TicketPage = () => {
                                 type="radio"
                                 onChange={handleChange}
                                 value={3}
-                                checked={formData.priority === 3}
+                                checked={formData.priority == 3}
                             />
                             <label htmlFor="priority-4">4</label>
                             <input
@@ -111,7 +148,7 @@ const TicketPage = () => {
                                 type="radio"
                                 onChange={handleChange}
                                 value={4}
-                                checked={formData.priority === 4}
+                                checked={formData.priority == 4}
                             />
                             <label htmlFor="priority-5">5</label>
                             <input
@@ -120,7 +157,7 @@ const TicketPage = () => {
                                 type="radio"
                                 onChange={handleChange}
                                 value={5}
-                                checked={formData.priority === 5}
+                                checked={formData.priority == 5}
                             />
                         </div>
                         {editMode && (
@@ -143,25 +180,25 @@ const TicketPage = () => {
                                     onChange={handleChange}
                                 >
                                     <option
-                                        selected={formData.status === "done"}
+                                        selected={formData.status === "Done"}
                                     >
                                         Done
                                     </option>
                                     <option
                                         selected={
-                                            formData.status === "working on it"
+                                            formData.status === "Working on it"
                                         }
                                     >
                                         Working on it
                                     </option>
                                     <option
-                                        selected={formData.status === "stuck"}
+                                        selected={formData.status === "Stuck"}
                                     >
                                         Stuck
                                     </option>
                                     <option
                                         selected={
-                                            formData.status === "not started"
+                                            formData.status === "Not Started"
                                         }
                                     >
                                         Not Started

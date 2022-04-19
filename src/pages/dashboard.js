@@ -1,44 +1,38 @@
+import { useState, useEffect, useContext } from "react";
+
 import TicketCard from "../components/ticketcard";
+import axios from "axios";
+import CategoriesContext from "../context";
 
 const Dashboard = () => {
-    const tickets = [
-        {
-            category: "Q1 2022",
-            color: "red",
-            title: "Testing",
-            owner: "Norms",
-            avatar: "https://cutewallpaper.org/21/luffy-profile-picture/luffy-y-nicon-robin-one-piece-minimalist-Forum-Avatar-.png",
-            status: "done",
-            priority: 5,
-            progress: 40,
-            description: "Testing display",
-            timestamp: "2022-02-11T07:32:13+0000",
-        },
-        {
-            category: "Q1 2022",
-            color: "red",
-            title: "Testing Testing",
-            owner: "Norms",
-            avatar: "https://cutewallpaper.org/21/luffy-profile-picture/luffy-y-nicon-robin-one-piece-minimalist-Forum-Avatar-.png",
-            status: "in progress",
-            priority: 5,
-            progress: 70,
-            description: "Hello world!",
-            timestamp: "2022-02-11T07:32:13+0000",
-        },
-        {
-            category: "Q2 2022",
-            color: "blue",
-            title: "Testing",
-            owner: "Norms",
-            avatar: "https://cutewallpaper.org/21/luffy-profile-picture/luffy-y-nicon-robin-one-piece-minimalist-Forum-Avatar-.png",
-            status: "done",
-            priority: 2,
-            progress: 40,
-            description: "Testing display",
-            timestamp: "2022-02-11T07:32:13+0000",
-        },
-    ];
+    const [tickets, setTickets] = useState(null);
+    const { categories, setCategories } = useContext(CategoriesContext);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await axios.get("http://localhost:8000/tickets");
+
+            const dataObject = response.data.data;
+
+            const arrayKeys = Object.keys(dataObject);
+            const arrayData = Object.keys(dataObject).map(
+                (key) => dataObject[key]
+            );
+            const formattedArray = [];
+            arrayKeys.forEach((key, index) => {
+                const formattedData = { ...arrayData[index] };
+                formattedData["documentId"] = key;
+                formattedArray.push(formattedData);
+            });
+            setTickets(formattedArray);
+        }
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        setCategories([...new Set(tickets?.map(({ category }) => category))]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tickets]);
 
     const uniqueCategories = [
         ...new Set(tickets?.map(({ category }) => category)),
@@ -51,8 +45,6 @@ const Dashboard = () => {
         "rgb(186, 255, 201)",
         "rgb(186, 255, 255)",
     ];
-
-    console.log(uniqueCategories);
 
     return (
         <div className="dashboard">
@@ -82,4 +74,5 @@ const Dashboard = () => {
         </div>
     );
 };
+
 export default Dashboard;

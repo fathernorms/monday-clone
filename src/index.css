@@ -27,9 +27,13 @@ nav {
 
 nav .logo-container,
 nav .controls-container {
-    padding: 30px 20px;
+    padding: 30px 15px;
     display: flex;
     flex-direction: column;
+}
+
+nav .controls-container .icon {
+    margin-top: 8px;
 }
 
 /* nav .logo-container img {
@@ -189,4 +193,17 @@ nav .controls-container {
 
 .ticket form .multiple-input-container {
     margin: 20px 0 20px 0;
+}
+
+.ticket form .img-preview {
+    height: auto;
+    width: auto;
+    margin: 30px;
+    border-radius: 400px;
+    overflow: hidden;
+
+}
+
+.ticket form .img-preview img {
+    width: 100%;
 }
