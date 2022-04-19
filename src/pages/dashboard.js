@@ -7,10 +7,11 @@ import CategoriesContext from "../context";
 const Dashboard = () => {
     const [tickets, setTickets] = useState(null);
     const { categories, setCategories } = useContext(CategoriesContext);
+    const apiURL = "https://norms-monday-clone.herokuapp.com/";
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8000/tickets");
+            const response = await axios.get(apiURL);
 
             const dataObject = response.data.data;
 
